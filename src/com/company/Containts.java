@@ -15,7 +15,6 @@ public class Containts extends JPanel implements ActionListener,MouseMotionListe
     int height = screenSize.height;//デスクトップの高さを取得
     int height5 = height/5;
 
-    JLabel jl;
     int jlx = width;
     int jly = height/7;//文字の位置を中心にした調整
     int fontSize = 160;
@@ -68,16 +67,18 @@ public class Containts extends JPanel implements ActionListener,MouseMotionListe
         removeAll();
 
         //////////アンチエイリアス(文字がきれいに見える。だけ)//////
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
+        Graphics2D g2s = (Graphics2D) g;//文字の影
         //図形や線のアンチエイリアシングの有効化
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //文字描画のアンチエイリアシングの有効化
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         /////////アンチエイリアスここまで///////////////////////////
 
-        g2.setFont(new Font("Ricty Diminished",Font.BOLD,fontSize));
+        g2s.setFont(new Font("Ricty Diminished", Font.BOLD, fontSize + 10));
+        g2.setFont(new Font("Ricty Diminished", Font.BOLD, fontSize));
         //カラーパレット
-        if(click) {
+        if (click) {
             JColorChooser cframe = new JColorChooser();//カラーパレッドの表示
             click = false;//1つだけパレット作成(これをしないと無限にカラーパレットが複製される)
             color = cframe.showDialog(mticker, "色選択", Color.BLACK);
@@ -88,7 +89,10 @@ public class Containts extends JPanel implements ActionListener,MouseMotionListe
 
         }
         g2.setColor(color);//色を変える
-        g2.drawString(str,jlx,jly);
+        g2s.setColor(Color.BLACK);
+        g2s.fillRect(jlx - 5, jly - 5, 8, 8);
+//        g2s.drawString(str,jlx-5,jly-5);
+        g2.drawString(str, jlx, jly);
 
     }
 
